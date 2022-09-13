@@ -2,31 +2,29 @@ export enum Colours {
   Red,
   Blue,
   Yellow,
-  Green
+  Green,
 }
 
 // TODO: implement a ColoursHelper class as shown in BodyParts
 export class ColoursHelper {
-  static Colours[] = [
+  static Colours: Colours[] = [
     Colours.Red,
     Colours.Blue,
     Colours.Yellow,
-    Colours.Green
-
+    Colours.Green,
   ];
   constructor() {}
 
   static get(key: string): Colours {
     switch (key) {
-      case "Red":
+      case 'Red':
         return Colours.Red;
-      case "Blue":
-          return Colours.Blue;
-      case "Yellow":
+      case 'Blue':
+        return Colours.Blue;
+      case 'Yellow':
         return Colours.Yellow;
-      case "Green":
+      case 'Green':
         return Colours.Green;
     }
   }
-
 }
