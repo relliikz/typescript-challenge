@@ -4,6 +4,13 @@ import { Colours } from './models/colours.enum';
 import { BodyParts, BodyPartsHelper } from './models/bodyParts.enum';
 import { SpinRecord } from './models/spin';
 
+const colourSelector: HTMLSelectElement = <HTMLSelectElement>(
+  document.getElementById('colourSelect')
+);
+const bodyPartSelector: HTMLSelectElement = <HTMLSelectElement>(
+  document.getElementById('bodyPartSelect')
+);
+
 // used to make the spinner spin
 let spinnerCounter = 0;
 
@@ -90,8 +97,8 @@ function stopSpinners() {
   let colourDiv = <HTMLDivElement>document.getElementById('colourResult');
   let bodyPartsDiv = <HTMLDivElement>document.getElementById('bodyPartResult');
 
-  colourDiv.style.backgroundColor = coloursArray[0].colour;
-  bodyPartsDiv.style.innerHTML =  
+  colourDiv.style.backgroundColor = selectedColour;
+  bodyPartP.innerHTML = selectedBodyPart;
   spinBtn.disabled = false;
   addToHistory();
 }
@@ -108,6 +115,10 @@ function statsBtnHandler() {
   // TODO set the statsResults div innerHTML to the amount and last spun number that the user has chosen
   // eg. Red LeftHand spun 10 times
   //     Red LeftHand last spun at num 23
+  let colourResult = colourSelector.value;
+  let bodyPartResult = bodyPartSelector.value;
+  let resultsDiv = document.getElementById('statsResults');
+  resultsDiv.innerHTML = 
 }
 
 // TODO returns the amount of times the combination of selected of colour and body part have been spun
