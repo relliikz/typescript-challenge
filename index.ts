@@ -1,6 +1,6 @@
 // Import stylesheets
 import './style.css';
-import { Colours } from './models/colours.enum';
+import { Colours, ColoursHelper } from './models/colours.enum';
 import { BodyParts, BodyPartsHelper } from './models/bodyParts.enum';
 import { SpinRecord } from './models/spin';
 
@@ -105,10 +105,13 @@ function stopSpinners() {
 
 // TODO add the newly spun result to the history table
 function addToHistory() {
-  let historyTable = <HTMLTableElement>document.getElementById('historyTable');
-  for (let index in spinHistoryArray) {
-    historyTable.innerHTML += spinHistoryArray[index].toString();
-  }
+  spinHistoryArray.push(
+    new SpinRecord(Colours[selectedColour], BodyParts[selectedBodyPart])
+  );
+  const table: HTMLTableElement = <HTMLTableElement>(
+    document.getElementById('historyTable')
+  );
+  table.insertRow().innerHTML = `<td>${spinHistoryArray.length}</td><td>${selectedColour}</td><td>${selectedBodyPart}</td>`;
 }
 
 function statsBtnHandler() {
@@ -118,15 +121,38 @@ function statsBtnHandler() {
   let colourResult = colourSelector.value;
   let bodyPartResult = bodyPartSelector.value;
   let resultsDiv = document.getElementById('statsResults');
-  resultsDiv.innerHTML = 
+  resultsDiv.innerHTML = `${colourResult} ${bodyPartResult} spun ${getAmount(
+    colourResult,
+    bodyPartResult
+  )} times; the last time being at spin ${getLastSpun(
+    colourResult,
+    bodyPartResult
+  )}`;
 }
 
 // TODO returns the amount of times the combination of selected of colour and body part have been spun
 function getAmount(colour, bodyPart): number {
-  return 0;
+  let number = 0;
+  for (let i = 0; i < spinHistoryArray.length; i++) {
+    if (
+      spinHistoryArray[i].colour === ColoursHelper.get(colour) &&
+      spinHistoryArray[i].bodyPart === BodyPartsHelper.get(bodyPart)
+    ) {
+      number++;
+    }
+  }
+  return number;
 }
 
 // TODO return the last num which the combination of selected of colour and body part have been spun
 function getLastSpun(colour, bodyPart): number {
-  return 0;
+  for (let i = spinHistoryArray.length - 1; i >= 0; i--) {
+    if (
+      ColoursHelper.get(colour) === spinHistoryArray[i].colour &&
+      BodyPartsHelper.get(bodyPart) === spinHistoryArray[i].bodyPart
+    ) {
+      return i + 1;
+    }
+  }
+  return NaN;
 }
