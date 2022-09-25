@@ -34,6 +34,9 @@ let coloursArray: Array<string> = [];
 for (let colour in Colours) {
   if (isNaN(Number(colour))) {
     coloursArray.push(colour);
+    let option = document.createElement('option');
+    option.text = colour;
+    colourSelector.add(option);
   }
 }
 
@@ -44,12 +47,17 @@ let bodyPartsArray: Array<string> = [];
 for (let bodyPart in BodyParts) {
   if (isNaN(Number(bodyPart))) {
     bodyPartsArray.push(bodyPart);
+    let option = document.createElement('option');
+    option.text = bodyPart;
+    bodyPartSelector.add(option);
   }
 }
 
 //-- TODO add eventlistners to buttons
 const spinBtn = <HTMLButtonElement>document.getElementById('spin-btn');
+const statsBtn = <HTMLButtonElement>document.getElementById('statsBtn');
 spinBtn.addEventListener('click', () => spinBtnHandler(2000, 100));
+statsBtn.addEventListener('click', () => statsBtnHandler());
 
 /* const statsBtn = <HTMLButtonElement>document.getElementById('statsBtn');
 statsBtn.addEventListener('click',); */
@@ -121,7 +129,7 @@ function statsBtnHandler() {
   let colourResult = colourSelector.value;
   let bodyPartResult = bodyPartSelector.value;
   let resultsDiv = document.getElementById('statsResults');
-  resultsDiv.innerHTML = `${colourResult} ${bodyPartResult} spun ${getAmount(
+  resultsDiv.innerHTML = `${colourResult} ${bodyPartResult} has been spun ${getAmount(
     colourResult,
     bodyPartResult
   )} times; the last time being at spin ${getLastSpun(
@@ -154,5 +162,5 @@ function getLastSpun(colour, bodyPart): number {
       return i + 1;
     }
   }
-  return NaN;
+  return 0;
 }
